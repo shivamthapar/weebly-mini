@@ -1,8 +1,51 @@
 <html>
   <head>
     <title>WeeblyMini - Login</title>
+    <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>
   </head>
   <body>
-  <a href = "#" id = "loginButton">Login with Google</a>
+    <span id="signinButton">
+    <span
+      class="g-signin"
+      data-callback="signinCallback"
+      data-clientid="{{ client_id }}"
+      data-cookiepolicy="single_host_origin"
+      data-requestvisibleactions="http://schema.org/AddAction"
+      data-scope="https://www.googleapis.com/auth/plus.login">
+    </span>
+  </span>
+  <script type = "text/javascript">
+  function signinCallback(authResult) {
+    if (authResult['status']['signed_in']) {
+      // Update the app to reflect a signed in user
+      // Hide the sign-in button now that the user is authorized, for example:
+      document.getElementById('signinButton').setAttribute('style', 'display: none');
+      window.authResult = authResult;
+      connectServer();
+    } else {
+      // Update the app to reflect a signed out user
+      // Possible error values:
+      //   "user_signed_out" - User is signed-out
+      //   "access_denied" - User denied access to your app
+      //   "immediate_failed" - Could not automatically log in the user
+      console.log('Sign-in state: ' + authResult['error']);
+    }
+  }
+  function connectServer(){
+    console.log(window.authResult.code);
+    $.ajax({
+      type: 'POST',
+      url: window.location.href + 'connect',
+      contentType: 'application/octet-stream; charset=utf-8',
+      success: function(result) {
+        console.log(result);
+        window.location.href = window.location.origin + "/users/profile";
+      },
+      processData: false,
+      data: window.authResult.code
+    }); 
+  }
+  </script>
   </body>
 </html>
