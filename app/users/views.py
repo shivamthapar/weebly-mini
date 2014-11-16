@@ -27,10 +27,8 @@ app = Flask(__name__)
 
 mod_users = Blueprint('users', __name__, url_prefix='/users')
 
-"""
 store = DictStore()
 KVSessionExtension(store, app)
-"""
 
 # update client_secrets.json to match api details
 CLIENT_ID = json.loads(

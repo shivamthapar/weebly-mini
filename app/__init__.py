@@ -11,4 +11,7 @@ db = SQLAlchemy(app)
 from app.users.views import mod_users as users_module
 app.register_blueprint(users_module)
 
+from app.pages.views import mod_pages as pages_module
+app.register_blueprint(pages_module)
+
 db.create_all()
