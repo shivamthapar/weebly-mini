@@ -16,7 +16,8 @@ class Page(Base):
   title = db.Column(db.String(128), nullable=False)
   content = db.Column(db.Text)
 
-  def __init__(self, title, content):
+  def __init__(self, gplusId, title, content):
+    self.gplusId = gplusId
     self.title = title
     self.content = content
 

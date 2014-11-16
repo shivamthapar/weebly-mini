@@ -1,4 +1,9 @@
 <div style="width: 20%; display: inline-block">
   <h3>pages</h3>
+  <ul>
+    {% for page in pages %}
+    <li>{{page.title}}</li>
+    {% endfor %}
+  </ul>
 </div>
 

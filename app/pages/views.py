@@ -22,6 +22,8 @@ from flask_kvsession import KVSessionExtension
 
 from app import db
 from app.users.models import User
+from app.pages.models import Page
+import app.pages.constants
 
 app = Flask(__name__)
 
@@ -52,4 +54,52 @@ def index():
     response.headers['Content-Type'] = 'application/json'
     return redirect(url_for('users.login'))
 
-  return render_template('pages/main.html')
+  pages = getPages()
+  page = pages[0]
+  return render_template('pages/main.html', pages=pages, page=page)
+
+def getPages():
+  gplusId = session.get('gplus_id')
+  query = Page.query.filter_by(gplusId=gplusId)
+  pages = []
+  for page in query:
+    pages.append(page)
+  return pages
+
+def createPage(title, content):
+  gplusId = session.get('gplus_id')
+  if gplusId is None:
+    raise Exception("User not logged in")
+  page = Page(gplusId, title, content)
+  db.session.add(page)
+  db.session.commit()
+  return page
+
+@mod_pages.route('/create', methods=['POST'])
+def create():
+  title = request.form['title']
+  content = request.form['content']
+  if title is not None:
+    page = createPage(title,content)
+    print page
+  return redirect(url_for('pages.index'))
+
+def updatePage(pageId, title, content):
+  gplusId = session.get('gplus_id')
+  if gplusId is None:
+    raise Exception("User not logged in")
+  page = Page.query.filter_by(id=pageId).first()
+  page.title = title
+  page.content = content
+  db.session.merge(page)
+  db.session.commit()
+  return page
+
+@mod_pages.route('/update/<pageId>', methods=['POST'])
+def update(pageId):
+  title = request.form['title']
+  content = request.form['content']
+  if title is not None:
+    page = updatePage(pageId,title,content)
+    print page
+  return redirect(url_for('pages.index'))

@@ -1,0 +1,1 @@
+DEFAULT_PAGE_TITLE = "A New Page"
