@@ -18,9 +18,9 @@ class User(Base):
     gplusId = db.Column(db.String(30), unique=True)
 
     # New instance instantiation procedure
-    def __init__(self, name, email, password):
-
-        self.name     = name
+    def __init__(self, name, gplusId):
+      self.name = name
+      self.gplusId = gplusId
 
     def __repr__(self):
         return '<User %r>' % (self.name)                        

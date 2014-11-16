@@ -20,6 +20,9 @@ from oauth2client.client import FlowExchangeError
 from simplekv.memory import DictStore
 from flask_kvsession import KVSessionExtension
 
+from app import db
+from app.users.models import User
+
 app = Flask(__name__)
 
 mod_users = Blueprint('users', __name__, url_prefix='/users')
@@ -87,9 +90,40 @@ def connect():
   # Store the access token in the session for later use.
   session['credentials'] = credentials.access_token
   session['gplus_id'] = gplus_id
-  response = make_response(json.dumps('Successfully connected user.', 200))
+  createUser()
+  response = make_response(json.dumps('Success'), 200)
   response.headers['Content-Type'] = 'application/json'
   return response
+
+@mod_users.route('/new', methods=['POST'])
+def createUser():
+  try:
+    details = getUserDetails()
+    user = User(details['name'], details['gplusId'])
+    db.session.add(user)
+    db.session.commit()
+    #return redirect(url_for(profile))
+  except Exception, e:
+    print e
+
+def getUserDetails():
+  access_token = session.get('credentials')
+  credentials = AccessTokenCredentials(access_token, 'user-agent-value')
+
+  # Only fetch a list of people for connected users.
+  if credentials is None:
+    raise Exception("Current user not connected")
+  try:
+    # Create a new authorized API client.
+    http = httplib2.Http()
+    http = credentials.authorize(http)
+    people_resource = SERVICE.people()
+    people_document = people_resource.get(userId='me').execute(http=http)
+    gplusId = people_document['id']
+    name = people_document['displayName']
+    return {'gplusId': gplusId,'name': name}
+  except AccessTokenRefreshError:
+    raise Exception("Failed to refresh access token")
 
 @mod_users.route('/profile')
 def profile():
@@ -107,11 +141,10 @@ def profile():
     http = credentials.authorize(http)
     people_resource = SERVICE.people()
     people_document = people_resource.get(userId='me').execute(http=http)
-    print "ID: " + people_document['id']
-    print "Display name: " + people_document['displayName']
-    print "Image URL: " + people_document['image']['url']
-    print "Profile URL: " + people_document['url']
-    response = make_response(json.dumps(people_document), 200)
+    gplusId = people_document['id']
+    user = User.query.filter_by(gplusId=gplusId).count()
+    print user
+    response = make_response('success', 200)
     response.headers['Content-Type'] = 'application/json'
     return response
 
