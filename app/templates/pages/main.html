@@ -1,9 +1,17 @@
 <html>
   <head>
     <title>WeeblyMini - Pages</title>
+    <link rel="stylesheet" href = "{{url_for('static',filename='css/main.css')}}" />
   </head>
   <body>
-    {% include 'pages/sidebar.html' %}
-    {% include 'pages/mainpanel.html' %}
+    <div id = "nav-bar">
+      <a href="#" id="nav-logo">
+        <img src="{{url_for('static', filename='weebly-logo.png')}}" />
+      </a>
+    </div>
+    <div id="content">
+      {% include 'pages/sidebar.html' %}
+      {% include 'pages/mainpanel.html' %}
+    </div>
   </body>
 </html>

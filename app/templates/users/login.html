@@ -2,10 +2,12 @@
   <head>
     <title>WeeblyMini - Login</title>
     <script src="https://apis.google.com/js/client:platform.js" async defer></script>
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>
+    <link rel="stylesheet" href = "{{url_for('static',filename='css/main.css')}}" />
   </head>
-  <body>
-    <span id="signinButton">
+  <body style="background: rgb(13,89,144)">
+    <img id="login-logo" src="{{url_for('static', filename='logo.png')}}"/>
+    <span id="signinButton" >
     <span
       class="g-signin"
       data-callback="signinCallback"

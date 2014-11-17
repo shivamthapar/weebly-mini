@@ -1,9 +1,9 @@
-<div style="width: 20%; display: inline-block">
-  <h3>pages</h3>
-  <ul>
+<div id="sidebar">
+  <ul id = "pages-list">
     {% for page in pages %}
-    <li>{{page.title}}</li>
+    <li><a href="/pages/{{page.id}}">{{page.title}}</a></li>
     {% endfor %}
   </ul>
+  <a href="/pages/create">New Page</a>
 </div>
 

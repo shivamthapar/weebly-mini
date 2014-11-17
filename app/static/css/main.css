@@ -1,0 +1,82 @@
+body{
+  margin:0px;
+  padding: 0px;
+}
+#content{
+  display: table;
+  height: 100%;
+}
+#login-logo{
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 200px;
+}
+#signinButton{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+}
+#nav-bar{
+  background: rgb(13,89,144);
+  height: 40px;
+  margin: 0px;
+  padding-left:10px;
+  padding-top: 10px;
+}
+#sidebar{
+  width: 20%;
+  display: table-cell;
+  height: 100%;
+  padding: 20px;
+  background: rgb(245,245,246);
+}
+#mainpanel{
+  width: 100%;
+  display: table-cell;
+  height: 100%;
+  padding-left:30px;
+}
+#pages-list{
+  list-style: none;
+  padding: 0px;
+  padding-top: 20px;
+}
+#pages-list li{
+  color: rgb(111,117,122);
+  margin-bottom: 10px;
+  font-family: 'Arial', sans-serif;
+}
+#pages-list li a{
+  text-decoration: none;
+  color: rgb(111,117,122);
+}
+#page-title{
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgb(204,206,208);
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: rgb(111,117,122);
+}
+#page-content{
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgb(204,206,208);
+  margin-bottom: 10px;
+  font-size: 14px;
+  height: 300px;
+  color: rgb(111,117,122);
+}
+#page-save-button{
+  background: rgb(41,131,214);
+  color: white;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 10px 25px;
+}

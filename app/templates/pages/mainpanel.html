@@ -1,11 +1,10 @@
-<div style="width:70%; display: inline-block">
-  <h3>Editor</h3>
+<div id="mainpanel" >
   <form action = "/pages/update/{{page.id}}" method = "POST">
-    <input type = "text" name = "title" placeholder="Title" value="{{page.title}}"/>
+    <input id="page-title" type = "text" name = "title" placeholder="Title" value="{{page.title}}"/>
     <br />
-    <textarea name = "content" placeholder="Body of the post...">{{page.content}}</textarea>
+    <textarea id="page-content" name = "content" placeholder="Body of the post...">{{page.content}}</textarea>
     <br />
-    <input type="submit" value = "Save!" />
+    <input id="page-save-button" type="submit" value = "Save" />
   </form>
 </div>
 
