@@ -5,6 +5,7 @@ body{
 #content{
   display: table;
   height: 100%;
+  width: 80%;
 }
 #login-logo{
   width: 400px;
@@ -30,19 +31,50 @@ body{
   width: 20%;
   display: table-cell;
   height: 100%;
-  padding: 20px;
-  background: rgb(245,245,246);
+  background: rgb(45,62,79);
+  padding: 0px;
+  vertical-align: top;
+}
+.sidebar-section{
+}
+.sidebar-section-content{
+  padding: 15px 20px;
+}
+.sidebar-section-title{
+  background-color: rgb(80,101,122);
+  color: rgb(156,178,200);
+  width: 100%;
+  text-align: center;
+  padding: 5px 0px;
+  border-top: 1px solid rgb(20,32,42);
+  border-bottom: 1px solid rgb(20,32,42);
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+#sidebar-new-page-button{
+  background: rgb(172,176,180);
+  color: white;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: 'Arial', sans-serif;
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 10px 0px;
 }
 #mainpanel{
-  width: 100%;
+  width: 75%;
   display: table-cell;
   height: 100%;
   padding-left:30px;
 }
 #pages-list{
   list-style: none;
-  padding: 0px;
   padding-top: 20px;
+  padding: 0px 15px 0px 15px;
+  margin-bottom: 30px;
 }
 #pages-list li{
   color: rgb(111,117,122);
@@ -51,7 +83,69 @@ body{
 }
 #pages-list li a{
   text-decoration: none;
-  color: rgb(111,117,122);
+  color: white;
+  width: 100%;
+  background: rgb(84,142,200);
+  display: block;
+  padding: 8px 0px 8px 15px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+#pages-list li a.selected{
+  color: black;
+}
+li#sidebar-new-page{
+  position: relative;
+}
+#sidebar-new-page-input{
+  text-decoration: none;
+  color: rgb(80,102,123);
+  width: 100%;
+  background: none;
+  display: block;
+  padding: 8px 0px 8px 15px;
+  border-radius: 3px;
+  font-size: 12px;
+  border: 2px solid rgb(80,102,123);
+}
+#sidebar-new-page-input:hover{
+  color: white;
+}
+::-webkit-input-placeholder {
+  color: rgb(80,102,123);
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: rgb(80,102,123);
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  color: rgb(80,102,123);
+}
+
+:-ms-input-placeholder {  
+  color: rgb(80,102,123);
+}
+#sidebar-new-page-add{
+  display: inline-block;
+  position: absolute;
+  top: 4px;
+  font-size: 20px;
+  right: 10px;
+  color: rgb(80,102,123);
+  font-weight: bold;
+}
+#sidebar-new-page-add #plus-button{
+  color: rgb(80,102,123);
+  font-weight: bold;
+  font-size: 20px;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+}
+#sidebar-new-page-add #plus-button:hover{
+  color: white;
 }
 #page-title{
   width: 100%;
@@ -72,11 +166,20 @@ body{
   height: 300px;
   color: rgb(111,117,122);
 }
-#page-save-button{
-  background: rgb(41,131,214);
+.page-panel-btn{
   color: white;
   border: none;
   font-size: 14px;
   border-radius: 5px;
   padding: 10px 25px;
+  display: inline;
+  font-family: 'Arial', sans-serif;
+  text-decoration: none;
+}
+#page-save-button{
+  background: rgb(41,131,214);
+}
+#page-delete-button{
+  background: rgb(206,208,210);
+  color: rgb(111,117,122);
 }

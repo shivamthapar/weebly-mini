@@ -56,10 +56,15 @@ def index():
     return redirect(url_for('users.login'))
 
   pages = getPages()
-  page = pages[0]
-  return render_template('pages/main.html', pages=pages, page=page)
+  noPages = False
+  if len(pages) == 0:
+    noPages = True
+    return render_template('pages/main.html', pages=pages, noPages=noPages)
+  else:
+    page = pages[0]
+    return render_template('pages/main.html', pages=pages, page=page, noPages=noPages)
 
-@mod_pages.route('/<id>')
+@mod_pages.route('/<int:id>')
 def show(id):
   access_token = session.get('credentials')
   gplusId = session.get('gplus_id')
@@ -77,8 +82,12 @@ def show(id):
     return redirect(url_for('users.login'))
 
   pages = getPages()
+  print gplusId
   # todo check for gplusId too
   page = Page.query.filter_by(id=id).first()
+  print id
+  print page.id
+  print id == page.id
   return render_template('pages/main.html', pages=pages, page=page, id=id)
 
 
@@ -101,17 +110,23 @@ def createPage(title, content):
 
 @mod_pages.route('/create', methods=['POST', 'GET'])
 def create():
-  if(request.method == 'GET'):
+  print request.method
+  print request.form
+  if request.method == 'GET':
     title = PAGE.DEFAULT_PAGE_TITLE
     content = ""
-  else:
+  if request.method == 'POST':
     title = request.form['title']
-    content = request.form['content']
+    if 'content' in request.form:
+      content = request.form['content']
+    else:
+      content = ""
+    print title
+    print content
   if title is None:
     title = PAGE.DEFAULT_PAGE_TITLE
   page = createPage(title,content)
-  print page
-  return redirect(url_for('pages.index'))
+  return redirect(url_for('pages.show', id=page.id))
 
 def updatePage(pageId, title, content):
   gplusId = session.get('gplus_id')

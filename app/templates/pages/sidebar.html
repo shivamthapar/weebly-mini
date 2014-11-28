@@ -1,9 +1,22 @@
 <div id="sidebar">
-  <ul id = "pages-list">
-    {% for page in pages %}
-    <li><a href="/pages/{{page.id}}">{{page.title}}</a></li>
-    {% endfor %}
-  </ul>
-  <a href="/pages/create">New Page</a>
+  <div class = "sidebar-section" id = "pages">
+    <p class = "sidebar-section-title">TEMPLATES</p>
+    <div class="sidebar-section-content">
+      <ul id = "pages-list">
+        {% if not noPages %}
+          {% for p in pages %}
+          <li><a {% if id == p.id %} class="selected" {% endif %} href="/pages/{{p.id}}">{{p.title}}</a></li>
+          {% endfor %}
+        {% endif %}
+        <li id="sidebar-new-page">
+          <form action="/pages/create" method="POST">
+            <input id = "sidebar-new-page-input" name="title" type = "text" placeholder = "ADD NEW PAGE" /> 
+            <span id = "sidebar-new-page-add"><input type="submit" id="plus-button" value="+" /></span>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <a id="sidebar-new-page-button" href="/pages/create">+ New Page</a>
 </div>
 
