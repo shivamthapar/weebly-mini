@@ -70,6 +70,7 @@ body{
   height: 100%;
   padding-left:30px;
   position: relative;
+  padding-top: 15px;
 }
 #pages-list{
   list-style: none;
@@ -240,6 +241,24 @@ li#sidebar-new-page{
   display: inline;
   font-family: 'Arial', sans-serif;
   text-decoration: none;
+}
+#nav-pages-list li {
+    display: inline-block;
+    border: 1px solid rgb(132,153,171);
+    background: rgb(152,170,187);
+    padding: 5px 30px;
+    margin-left: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+#nav-pages-list li p {
+    margin-bottom: 0px;
+    color: white;
+}
+
+ul#nav-pages-list {
+    margin-left: 0px;
+    padding-left: 0px;
 }
 #page-save-button{
   background: rgb(41,131,214);

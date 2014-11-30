@@ -43,8 +43,42 @@ class TextElement(Base):
       'height': self.height
     }
 
+class ImageElement(Base):
+  __tablename__ = 'image_elements'
+  page_id = db.Column(db.Integer, db.ForeignKey('pages.id'))
+  x_coord = db.Column(db.String(30))
+  y_coord = db.Column(db.String(30))
+  content = db.Column(db.Text)
+  width = db.Column(db.Text)
+  height = db.Column(db.Text)
+
+  def __init__(self, content, xCoord, yCoord, width=None, height=None):
+    self.x_coord = xCoord
+    self.y_coord = yCoord
+    self.width = width
+    self.height = height
+    if width is None:
+      self.width = PAGE.DEFAULT_TEXT_ELEM_WIDTH
+    if height is None:
+      self.height = PAGE.DEFAULT_TEXT_ELEM_HEIGHT
+    if xCoord is None:
+      self.x_coord = PAGE.DEFAULT_TEXT_ELEM_XCOORD
+    if yCoord is None:
+      self.y_coord = PAGE.DEFAULT_TEXT_ELEM_YCOORD
+    self.content = content
+
+  def serialize(self):
+    return {
+      'id': self.id,
+      'pageId': self.page_id,
+      'xCoord': self.x_coord,
+      'yCoord': self.y_coord,
+      'width': self.width,
+      'height': self.height
+    }
+
   def __repr__(self):
-    return '<TextElement %d>' % self.id
+    return '<ImageElement %d>' % self.id
 
 class Page(Base):
 
@@ -54,6 +88,7 @@ class Page(Base):
   title = db.Column(db.String(128), nullable=False)
   content = db.Column(db.Text)
   text_elements = db.relationship('TextElement', backref='page',lazy='dynamic')
+  image_elements = db.relationship('ImageElement', backref='page',lazy='dynamic')
 
   def __init__(self, gplusId, title, content):
     self.gplusId = gplusId
@@ -62,11 +97,13 @@ class Page(Base):
 
   def serialize(self):
     text_elements = [elem.serialize() for elem in self.text_elements]
+    image_elements = [elem.serialize() for elem in self.image_elements]
     return {
       'id': self.id,
       'title': self.title,
       'gplusId': self.gplusId,
-      'textElements': text_elements
+      'textElements': text_elements,
+      'imageElements': image_elements
     }
 
   def __repr__(self):
