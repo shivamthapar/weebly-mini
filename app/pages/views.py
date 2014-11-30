@@ -191,19 +191,13 @@ def update(pageId):
 
   if 'text_elements' in data:
     text_elements = data['text_elements']
-  else:
-    text_elements = None
-
-  for elem in text_elements:
-    updateTextElement(elem['id'],elem)
+    for elem in text_elements:
+      updateTextElement(elem['id'],elem)
 
   if 'image_elements' in data:
     image_elements = data['image_elements']
-  else:
-    image_elements = None
-
-  for elem in image_elements:
-    updateImageElement(elem['id'],elem)
+    for elem in image_elements:
+      updateImageElement(elem['id'],elem)
 
   gplusId = session.get('gplus_id')
   if gplusId is None:

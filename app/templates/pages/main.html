@@ -72,7 +72,7 @@
       $.ajax({
         url : url,
         type: "POST",
-        data : data,
+        data : JSON.stringify(data),
         success: callback,
         error: function (jqXHR, textStatus, errorThrown)
         {
