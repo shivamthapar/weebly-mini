@@ -46,13 +46,13 @@ class TextElement(Base):
 class ImageElement(Base):
   __tablename__ = 'image_elements'
   page_id = db.Column(db.Integer, db.ForeignKey('pages.id'))
+  img_url = db.Column(db.String(1024))
   x_coord = db.Column(db.String(30))
   y_coord = db.Column(db.String(30))
-  content = db.Column(db.Text)
   width = db.Column(db.Text)
   height = db.Column(db.Text)
 
-  def __init__(self, content, xCoord, yCoord, width=None, height=None):
+  def __init__(self, imgUrl, xCoord, yCoord, width=None, height=None):
     self.x_coord = xCoord
     self.y_coord = yCoord
     self.width = width
@@ -65,11 +65,12 @@ class ImageElement(Base):
       self.x_coord = PAGE.DEFAULT_TEXT_ELEM_XCOORD
     if yCoord is None:
       self.y_coord = PAGE.DEFAULT_TEXT_ELEM_YCOORD
-    self.content = content
+    self.img_url = imgUrl
 
   def serialize(self):
     return {
       'id': self.id,
+      'imgUrl': self.img_url,
       'pageId': self.page_id,
       'xCoord': self.x_coord,
       'yCoord': self.y_coord,

@@ -21,11 +21,10 @@ body{
   width: 150px;
 }
 #nav-bar{
-  background: rgb(13,89,144);
+  background: rgb(84,142,200);
   height: 40px;
   margin: 0px;
   padding-left:10px;
-  padding-top: 10px;
 }
 #sidebar{
   width: 20%;
@@ -221,6 +220,7 @@ li#sidebar-new-page{
   color: rgb(111, 117, 122);
   border-radius: 5px;
   margin: 0px;
+  background: transparent;
 }
 #page-content{
   width: 100%;

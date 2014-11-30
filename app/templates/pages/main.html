@@ -8,7 +8,7 @@
   <body>
     <div id = "nav-bar">
       <a href="#" id="nav-logo">
-        <img src="{{url_for('static', filename='weebly-logo.png')}}" />
+        <img src="{{url_for('static', filename='Weebly-Logo.png')}}" />
       </a>
     </div>
     <div id="content">
@@ -67,6 +67,57 @@
           console.log("ERROR "+errorThrown);
         }
       });
+    }
+    function updatePageAndElements(pageId){
+      var url = document.location.origin+"/pages/update/"+pageId;
+      var data = getPageAndElemData();
+      $.ajax({
+        url : url,
+        type: "POST",
+        data : data,
+        success: function (jqXHR, textStatus, errorThrown)
+        {
+          console.log("page and elems updated");
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          console.log("ERROR "+errorThrown);
+        }
+      });
+    }
+    function getPageAndElemData(){
+      var data = {};
+      data.title = $(".pages-list-page.selected").first().html();
+      data.text_elements = [];
+      text_elems = $(".text-elem");
+      console.log(text_elems);
+      for(var i = 0;i<text_elems.length; i++){
+        var $elem = $(text_elems[i]);
+        console.log($elem);
+        data.text_elements.push({
+          "id": parseInt($elem.attr('id').substr(10)),
+          "content": $elem.val(),
+          "x_coord": $elem.css('left'),
+          "y_coord": $elem.css('top'),
+          "width": $elem.css('width'),
+          "height": $elem.css('height')
+        });
+      }
+      data.image_elements = [];
+      image_elems = $(".image-elem");
+      for(var i = 0;i<image_elems.length; i++){
+        var $elem = $(image_elems[i]);
+        data.image_elements.push({
+          "id": parseInt($elem.attr('id').substr(11)),
+          "img_url": $elem.attr('src').substr($elem.attr('src').lastIndexOf('/')+1),
+          "x_coord": $elem.css('left'),
+          "y_coord": $elem.css('top'),
+          "width": $elem.css('width'),
+          "height": $elem.css('height')
+        });
+      }
+      console.log(data);
+      return data;
     }
     </script>
   </body>

@@ -10,6 +10,9 @@
     {% for elem in page.text_elements %}
     <textarea id="text-elem-{{elem.id}}" name = "text-elem-{{elem.id}}" placeholder="Text" class="text-elem" style="top:{{elem.y_coord}}; left:{{elem.x_coord}};width:{{elem.width}};height:{{elem.height}};">{{elem.content}}</textarea>
     {% endfor %}
+    {% for elem in page.image_elements %}
+    <img id="image-elem-{{elem.id}}" name = "image-elem-{{elem.id}}" class="image-elem" style="top:{{elem.y_coord}}; left:{{elem.x_coord}};width:{{elem.width}};height:{{elem.height}};" src="{{url_for('static', filename='')}}{{elem.img_url}}" />
+    {% endfor %}
     <!--
     <textarea id="page-content" name = "content" placeholder="Body of the post...">{{page.content}}</textarea>
     -->

@@ -23,7 +23,7 @@ from sqlalchemy import and_
 
 from app import db
 from app.users.models import User
-from app.pages.models import Page
+from app.pages.models import Page, TextElement, ImageElement
 from app.pages import constants as PAGE
 
 app = Flask(__name__)
@@ -87,6 +87,8 @@ def show(id):
   page = Page.query.filter_by(id=id).first()
   text_elems = page.text_elements.all()
   page.text_elements = text_elems
+  image_elems = page.image_elements.all()
+  page.image_elements = image_elems
   return render_template('pages/main.html', pages=pages, page=page, id=id)
 
 
@@ -140,17 +142,57 @@ def updatePage(pageId, title, content):
   db.session.commit()
   return page
 
+def updateTextElement(id, props):
+  gplusId = session.get('gplus_id')
+  if gplusId is None:
+    raise Exception("User not logged in")
+  elem = TextElement.query.filter_by(id=id).first()
+  if 'content' in props:
+    elem.content = props.content
+  if 'x_coord' in props:
+    elem.x_coord = props.x_coord
+  if 'y_coord' in props:
+    elem.y_coord = props.y_coord
+  if 'width' in props:
+    elem.width = props.width
+  if 'height' in props:
+    elem.height = props.height
+  db.session.merge(elem)
+  db.session.commit()
+  return elem
+
 @mod_pages.route('/update/<pageId>', methods=['POST'])
 def update(pageId):
+  print json.dumps(request.form)
+  print request.form["text_elements[1][y_coord]"]
   if 'title' in request.form:
     title = request.form['title']
   else:
     title = None
-  if 'content' in request.form:
-    content = request.form['content']
+
+  if 'text_elements' in request.form:
+    text_elements = request.form['text_elements']
   else:
-    content = None
-  page = updatePage(pageId,title,content)
+    text_elements = None
+
+  for elem in text_elements:
+    updateTextElement(elem.id,elem)
+
+  if 'image_elements' in request.form:
+    image_elements = request.form['image_elements']
+  else:
+    image_elements = None
+
+  gplusId = session.get('gplus_id')
+  if gplusId is None:
+    raise Exception("User not logged in")
+  page = Page.query.filter_by(id=pageId).first()
+  if title is not None:
+    page.title = title
+  if content is not None:
+    page.content = content
+  db.session.merge(page)
+  db.session.commit()
   response = make_response(json.dumps(page.serialize()), 200)
   response.headers['Content-Type'] = 'application/json'
   print page
