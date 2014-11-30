@@ -85,9 +85,8 @@ def show(id):
   print gplusId
   # todo check for gplusId too
   page = Page.query.filter_by(id=id).first()
-  print id
-  print page.id
-  print id == page.id
+  text_elems = page.text_elements.all()
+  page.text_elements = text_elems
   return render_template('pages/main.html', pages=pages, page=page, id=id)
 
 
@@ -133,17 +132,35 @@ def updatePage(pageId, title, content):
   if gplusId is None:
     raise Exception("User not logged in")
   page = Page.query.filter_by(id=pageId).first()
-  page.title = title
-  page.content = content
+  if title is not None:
+    page.title = title
+  if content is not None:
+    page.content = content
   db.session.merge(page)
   db.session.commit()
   return page
 
 @mod_pages.route('/update/<pageId>', methods=['POST'])
 def update(pageId):
-  title = request.form['title']
-  content = request.form['content']
-  if title is not None:
-    page = updatePage(pageId,title,content)
-    print page
+  if 'title' in request.form:
+    title = request.form['title']
+  else:
+    title = None
+  if 'content' in request.form:
+    content = request.form['content']
+  else:
+    content = None
+  page = updatePage(pageId,title,content)
+  response = make_response(json.dumps(page.serialize()), 200)
+  response.headers['Content-Type'] = 'application/json'
+  print page
+  return response
+
+@mod_pages.route('/delete/<pageId>', methods=['GET'])
+def delete(pageId):
+  gplusId = session.get('gplus_id')
+  if gplusId is None:
+    raise Exception("User not logged in")
+  Page.query.filter_by(id=pageId).delete()
+  db.session.commit()
   return redirect(url_for('pages.index'))

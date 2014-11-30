@@ -5,7 +5,13 @@
       <ul id = "pages-list">
         {% if not noPages %}
           {% for p in pages %}
-          <li><a {% if id == p.id %} class="selected" {% endif %} href="/pages/{{p.id}}">{{p.title}}</a></li>
+          <li><a id="page-{{p.id}}" class="pages-list-page {% if id == p.id %} selected {% endif %}" href="/pages/{{p.id}}">{{p.title}}</a>
+          <input type="text" id="page-title-input-{{p.id}}" class="page-title-input" name="title" value="{{p.title}}" />
+            <span class="page-buttons">
+              <a class="icon-pencil edit-page-button" id="edit-page-button" ></a>
+              <a class="icon-delete delete-page-button" id="delete-page-button" href="/pages/delete/{{p.id}}"></a>
+            </span>
+          </li>
           {% endfor %}
         {% endif %}
         <li id="sidebar-new-page">
@@ -17,6 +23,5 @@
       </ul>
     </div>
   </div>
-  <a id="sidebar-new-page-button" href="/pages/create">+ New Page</a>
 </div>
 

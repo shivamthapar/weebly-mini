@@ -1,13 +1,19 @@
 <div id="mainpanel" >
   {% if not noPages %}
-  <form action = "/pages/update/{{page.id}}" method = "POST">
-    <input id="page-title" type = "text" name = "title" placeholder="Title" value="{{page.title}}"/>
+      <ul id = "nav-pages-list">
+          {% for p in pages %}
+          <li><p {% if id == p.id %} class="selected" {% endif %} >{{p.title}}</p>
+          </li>
+          {% endfor %}
+      </ul>
     <br />
+    {% for elem in page.text_elements %}
+    <textarea id="text-elem-{{elem.id}}" name = "text-elem-{{elem.id}}" placeholder="Text" class="text-elem" style="top:{{elem.y_coord}}; left:{{elem.x_coord}};width:{{elem.width}};height:{{elem.height}};">{{elem.content}}</textarea>
+    {% endfor %}
+    <!--
     <textarea id="page-content" name = "content" placeholder="Body of the post...">{{page.content}}</textarea>
+    -->
     <br />
-    <a class="page-panel-btn" id="page-delete-button" data-href="http://google.com">Delete</a>
-    <input class="page-panel-btn"id="page-save-button" type="submit" value = "Save" />
-  </form>
   {% endif %}
 </div>
 

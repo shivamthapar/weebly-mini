@@ -69,6 +69,7 @@ body{
   display: table-cell;
   height: 100%;
   padding-left:30px;
+  position: relative;
 }
 #pages-list{
   list-style: none;
@@ -80,6 +81,7 @@ body{
   color: rgb(111,117,122);
   margin-bottom: 10px;
   font-family: 'Arial', sans-serif;
+  position: relative;
 }
 #pages-list li a{
   text-decoration: none;
@@ -93,6 +95,58 @@ body{
 }
 #pages-list li a.selected{
   color: black;
+}
+.page-title-input{
+  text-decoration: none;
+  color: rgb(80,102,123);
+  width: 100%;
+  background: none;
+  display: block;
+  padding: 8px 0px 8px 15px;
+  border-radius: 3px;
+  font-size: 12px;
+  border: 2px solid rgb(80,102,123);
+}
+.page-title-input:focus{
+  color: white;
+}
+#pages-list li span.page-buttons{
+  position: absolute;
+  top: 8px;
+  right: 5px;
+}
+#pages-list li span.page-buttons a{
+  padding: 0px;
+  text-decoration: none;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-image: url('../Add-Delete-Edit-Icons.png');
+  cursor: pointer;
+}
+#pages-list li span.page-buttons a#edit-page-button{
+  background-position-x: 46px;
+  background-position-y: -14px;
+}
+#pages-list li span.page-buttons a#edit-page-button:hover{
+  background-position-x: 46px;
+  background-position-y: -32px;
+}
+#pages-list li span.page-buttons a#edit-page-button:active{
+  background-position-x: 46px;
+  background-position-y: -50px;
+}
+#pages-list li span.page-buttons a#delete-page-button{
+  background-position-x: 26px;
+  background-position-y: -14px;
+}
+#pages-list li span.page-buttons a#delete-page-button:hover{
+  background-position-x: 26px;
+  background-position-y: -32px;
+}
+#pages-list li span.page-buttons a#delete-page-button:active{
+  background-position-x: 26px;
+  background-position-y: -50px;
 }
 li#sidebar-new-page{
   position: relative;
@@ -108,7 +162,7 @@ li#sidebar-new-page{
   font-size: 12px;
   border: 2px solid rgb(80,102,123);
 }
-#sidebar-new-page-input:hover{
+#sidebar-new-page-input:hover, #sidebar-new-page-input:focus{
   color: white;
 }
 ::-webkit-input-placeholder {
@@ -155,6 +209,17 @@ li#sidebar-new-page{
   margin-bottom: 22px;
   font-size: 14px;
   color: rgb(111,117,122);
+}
+.page-title-input{
+  display:none;
+}
+.text-elem{
+  position:absolute;
+  border: 1px solid rgb(145, 200, 203);
+  font-size: 14px;
+  color: rgb(111, 117, 122);
+  border-radius: 5px;
+  margin: 0px;
 }
 #page-content{
   width: 100%;

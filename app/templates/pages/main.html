@@ -15,5 +15,59 @@
       {% include 'pages/sidebar.html' %}
       {% include 'pages/mainpanel.html' %}
     </div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $(".edit-page-button").click(function(){
+        var index = $(".edit-page-button").index(this);
+        var $page_link = $(".pages-list-page:eq("+index+")");
+        var page_id = parseInt($page_link.attr('id').substr(5));
+        $page_link.hide();
+        $(".page-title-input:eq("+index+")").show();
+        $(".page-title-input:eq("+index+")").focus();
+        
+        $(this).hide();
+        $(".delete-page-button:eq("+index+")").hide();
+      });
+      $(".page-title-input").keyup(function(e){
+        if(e.keyCode == 13){
+          updateFunction($(this));
+        }
+      });
+      $(".page-title-input").blur(function(e){
+        updateFunction($(this));
+      });
+      function updateFunction($input){
+        var page_id = parseInt($input.attr('id').substr(17));
+        var new_title = $input.val();
+        updateTitle(page_id, new_title, 
+          function(data, textStatus, jqXHR){
+            console.log(data);
+            console.log(new_title);
+            var page_link = $input.siblings(".pages-list-page")[0];
+            $(page_link).html(new_title);
+            $(".edit-page-button").show();
+            $(".delete-page-button").show();
+            $(page_link).show();
+            $input.hide();
+            document.location.href = document.location.href;
+          }
+        );
+      }
+    });
+    function updateTitle(pageId, newTitle, callback){
+      var url = document.location.origin+"/pages/update/"+pageId;
+      var data = {title: newTitle};
+      $.ajax({
+        url : url,
+        type: "POST",
+        data : data,
+        success: callback,
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+          console.log("ERROR "+errorThrown);
+        }
+      });
+    }
+    </script>
   </body>
 </html>
