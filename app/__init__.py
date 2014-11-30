@@ -14,4 +14,7 @@ app.register_blueprint(users_module)
 from app.pages.views import mod_pages as pages_module
 app.register_blueprint(pages_module)
 
+from app.api.views import mod_api as api_module
+app.register_blueprint(api_module)
+
 db.create_all()

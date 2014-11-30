@@ -55,14 +55,15 @@ def index():
     response.headers['Content-Type'] = 'application/json'
     return redirect(url_for('users.login'))
 
+  user = User.query.filter_by(gplusId=gplusId).first()
   pages = getPages()
   noPages = False
   if len(pages) == 0:
     noPages = True
-    return render_template('pages/main.html', pages=pages, noPages=noPages)
+    return render_template('pages/main.html', pages=pages, noPages=noPages, user=user)
   else:
     page = pages[0]
-    return render_template('pages/main.html', pages=pages, page=page, noPages=noPages)
+    return render_template('pages/main.html', pages=pages, page=page, noPages=noPages, user=user)
 
 @mod_pages.route('/<int:id>')
 def show(id):
@@ -81,6 +82,7 @@ def show(id):
     response.headers['Content-Type'] = 'application/json'
     return redirect(url_for('users.login'))
 
+  user = User.query.filter_by(gplusId=gplusId).first()
   pages = getPages()
   print gplusId
   # todo check for gplusId too
@@ -89,7 +91,7 @@ def show(id):
   page.text_elements = text_elems
   image_elems = page.image_elements.all()
   page.image_elements = image_elems
-  return render_template('pages/main.html', pages=pages, page=page, id=id)
+  return render_template('pages/main.html', pages=pages, page=page, id=id, user=user)
 
 
 def getPages():
