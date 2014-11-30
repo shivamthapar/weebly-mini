@@ -36,6 +36,18 @@
       $(".page-title-input").blur(function(e){
         updateFunction($(this));
       });
+      $(".text-elem").blur(function(e){
+        var pageId = parseInt($(this).attr('id').substr(10));
+        updatePageAndElements(pageId);
+        //$(this).addClass('saved').fadeIn('slow').removeClass('saved');
+        $(this).fadeOut(function(){
+            $(this).addClass('saved').fadeIn('slow');
+          },
+          function(){
+            $(this).removeClass('saved').fadeIn('fast');
+          }
+        );
+      });
       function updateFunction($input){
         var page_id = parseInt($input.attr('id').substr(17));
         var new_title = $input.val();
@@ -70,11 +82,12 @@
     }
     function updatePageAndElements(pageId){
       var url = document.location.origin+"/pages/update/"+pageId;
-      var data = getPageAndElemData();
+      var data = JSON.stringify(getPageAndElemData());
       $.ajax({
         url : url,
         type: "POST",
-        data : data,
+        data: data,
+        dataType: 'json',
         success: function (jqXHR, textStatus, errorThrown)
         {
           console.log("page and elems updated");

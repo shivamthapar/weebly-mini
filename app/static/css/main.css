@@ -222,6 +222,11 @@ li#sidebar-new-page{
   margin: 0px;
   background: transparent;
 }
+.text-elem.saved{
+  border: 1px solid rgb(0, 216, 27);
+  background: rgb(123, 208, 0);
+  color: white;
+}
 #page-content{
   width: 100%;
   padding: 10px;

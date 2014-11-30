@@ -148,40 +148,62 @@ def updateTextElement(id, props):
     raise Exception("User not logged in")
   elem = TextElement.query.filter_by(id=id).first()
   if 'content' in props:
-    elem.content = props.content
+    elem.content = props['content']
   if 'x_coord' in props:
-    elem.x_coord = props.x_coord
+    elem.x_coord = props['x_coord']
   if 'y_coord' in props:
-    elem.y_coord = props.y_coord
+    elem.y_coord = props['y_coord']
   if 'width' in props:
-    elem.width = props.width
+    elem.width = props['width']
   if 'height' in props:
-    elem.height = props.height
+    elem.height = props['height']
+  db.session.merge(elem)
+  db.session.commit()
+  return elem
+
+def updateImageElement(id, props):
+  gplusId = session.get('gplus_id')
+  if gplusId is None:
+    raise Exception("User not logged in")
+  elem = ImageElement.query.filter_by(id=id).first()
+  if 'img_url' in props:
+    elem.img_url = props['img_url']
+  if 'x_coord' in props:
+    elem.x_coord = props['x_coord']
+  if 'y_coord' in props:
+    elem.y_coord = props['y_coord']
+  if 'width' in props:
+    elem.width = props['width']
+  if 'height' in props:
+    elem.height = props['height']
   db.session.merge(elem)
   db.session.commit()
   return elem
 
 @mod_pages.route('/update/<pageId>', methods=['POST'])
 def update(pageId):
-  print json.dumps(request.form)
-  print request.form["text_elements[1][y_coord]"]
-  if 'title' in request.form:
-    title = request.form['title']
+  data = request.get_json(force=True)
+  print data
+  if 'title' in data:
+    title = data['title']
   else:
     title = None
 
-  if 'text_elements' in request.form:
-    text_elements = request.form['text_elements']
+  if 'text_elements' in data:
+    text_elements = data['text_elements']
   else:
     text_elements = None
 
   for elem in text_elements:
-    updateTextElement(elem.id,elem)
+    updateTextElement(elem['id'],elem)
 
-  if 'image_elements' in request.form:
-    image_elements = request.form['image_elements']
+  if 'image_elements' in data:
+    image_elements = data['image_elements']
   else:
     image_elements = None
+
+  for elem in image_elements:
+    updateImageElement(elem['id'],elem)
 
   gplusId = session.get('gplus_id')
   if gplusId is None:
@@ -189,8 +211,6 @@ def update(pageId):
   page = Page.query.filter_by(id=pageId).first()
   if title is not None:
     page.title = title
-  if content is not None:
-    page.content = content
   db.session.merge(page)
   db.session.commit()
   response = make_response(json.dumps(page.serialize()), 200)
