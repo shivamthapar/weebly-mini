@@ -60,7 +60,7 @@ def getPages():
     arr.append(page.serialize())
   print arr
   dict = {"pages": arr}
-  response = make_response(json.dumps(dict), 401)
+  response = make_response(json.dumps(dict), 200)
   response.headers['Content-Type'] = 'application/json'
   return response
   
