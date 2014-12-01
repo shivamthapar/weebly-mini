@@ -23,7 +23,10 @@ class User(Base):
     def __init__(self, name, gplusId):
       self.name = name
       self.gplusId = gplusId
-      self.apiToken = hashlib.sha256(gplusId).hexdigest()
+
+    def getAPIToken(self):
+      str = "%d-%s-%s"%(self.id, self.gplusId, self.name)
+      return hashlib.sha256(str).hexdigest()
 
     def __repr__(self):
         return '<User %r>' % (self.name)                        

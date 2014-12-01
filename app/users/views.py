@@ -100,6 +100,9 @@ def createUser():
     user = User(details['name'], details['gplusId'])
     db.session.add(user)
     db.session.commit()
+    user.apiToken = user.getAPIToken()
+    db.session.merge(user)
+    db.session.commit()
     #return redirect(url_for(profile))
   except Exception, e:
     print e
