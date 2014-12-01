@@ -21,8 +21,9 @@ from simplekv.memory import DictStore
 from flask_kvsession import KVSessionExtension
 
 from app import db
-import app.pages.views as pageViews
+from app.pages.models import Page
 from app.users.models import User
+import app.api.constants as API
 
 app = Flask(__name__)
 
@@ -38,33 +39,37 @@ SERVICE = build('plus', 'v1')
 
 @mod_api.route('/pages', methods=['GET'])
 def getPages():
-  access_token = session.get('credentials')
-  gplusId = session.get('gplus_id')
-
-  if access_token is None:
-    response = make_response(json.dumps('Current user not connected.'), 401)
-    response.headers['Content-Type'] = 'application/json'
-    return redirect(url_for('users.login'))
-  credentials = AccessTokenCredentials(access_token, 'user-agent-value')
-
-  # Only fetch a list of people for connected users.
-  if credentials is None:
-    response = make_response(json.dumps('Current user not connected.'), 401)
-    response.headers['Content-Type'] = 'application/json'
-    return redirect(url_for('users.login'))
-
-  user = User.query.filter_by(gplusId=gplusId).first()
-  pages = pageViews.getPages()
-  arr = []
-  for page in pages:
-    arr.append(page.serialize())
-  print arr
-  dict = {"pages": arr}
+  apiToken = request.args.get('apiToken')
+  user = User.query.filter_by(apiToken=apiToken).first()
+  if user is None:
+    return generateError(API.INVALID_API_TOKEN_MSG)
+  query = Page.query.filter_by(gplusId=user.gplusId)
+  pages = []
+  for page in query:
+    pages.append(page.serialize())
+  dict = {"pages": pages}
   response = make_response(json.dumps(dict), 200)
   response.headers['Content-Type'] = 'application/json'
   return response
-  
 
-@mod_api.route('/')
-def index():
-  return 'API INDEX'
+@mod_api.route('/pages/<int:id>', methods=['GET'])
+def getPage(id):
+  apiToken = request.args.get('apiToken')
+  user = User.query.filter_by(apiToken=apiToken).first()
+  if user is None:
+    return generateError(API.INVALID_API_TOKEN_MSG)
+  page = Page.query.filter_by(id=id).first()
+  if page is None:
+    return generateError(API.INVALID_PAGE_ID_MSG)
+  if page.gplusId != user.gplusId:
+    return generateError(API.WRONG_USER_MSG)
+  response = make_response(json.dumps(page.serialize()), 200)
+  response.headers['Content-Type'] = 'application/json'
+  return response
+
+def generateError(msg):
+    error = {"error": msg}
+    response = make_response(json.dumps(error), 500)
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
