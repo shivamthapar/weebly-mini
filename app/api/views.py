@@ -21,9 +21,10 @@ from simplekv.memory import DictStore
 from flask_kvsession import KVSessionExtension
 
 from app import db
-from app.pages.models import Page
+from app.pages.models import Page, TextElement, ImageElement
 from app.users.models import User
 import app.api.constants as API
+import app.pages.constants as PAGE
 
 app = Flask(__name__)
 
@@ -66,6 +67,97 @@ def getPage(id):
   response = make_response(json.dumps(page.serialize()), 200)
   response.headers['Content-Type'] = 'application/json'
   return response
+
+@mod_api.route('/pages', methods=['POST'])
+def createPage():
+  apiToken = request.args.get('apiToken')
+  user = User.query.filter_by(apiToken=apiToken).first()
+  if user is None:
+    return generateError(API.INVALID_API_TOKEN_MSG)
+  data = request.get_json(force=True)
+  if 'title' in data:
+    title = data['title']
+  else:
+    title = PAGE.DEFAULT_PAGE_TITLE
+  page = Page(user.gplusId,title, "")
+  text_element_objs = []
+  if 'textElements' in data:
+    text_elements = data['textElements']
+    for elem in text_elements:
+      e = createTextElement(elem)
+      text_element_objs.append(e)
+      page.text_elements.append(e)
+
+  image_element_objs = []
+  if 'imageElements' in data:
+    image_elements = data['imageElements']
+    for elem in image_elements:
+      e = createImageElement(elem)
+      image_element_objs.append(e)
+      page.image_elements.append(e)
+  
+  db.session.add(page)
+  for elem in text_element_objs:
+    db.session.add(elem)
+  for elem in image_element_objs:
+    db.session.add(elem)
+    
+  db.session.commit()
+  p = Page.query.filter_by(title=page.title).first()
+  response = make_response(json.dumps(p.serialize()), 200)
+  response.headers['Content-Type'] = 'application/json'
+  return response
+
+def createTextElement(elem):
+  if 'xCoord' in elem:
+    xCoord = elem['xCoord']
+  else:
+    xCoord = None
+  if 'yCoord' in elem:
+    yCoord = elem['yCoord']
+  else:
+    yCoord = None
+  if 'width' in elem:
+    width = elem['width']
+  else:
+    width = None
+  if 'height' in elem:
+    height = elem['height']
+  else:
+    height = None
+  if 'content' in elem:
+    content = elem['content']
+  else:
+    content = None
+  e = TextElement(content, xCoord, yCoord, width, height)
+  db.session.add(e)
+  return e
+
+def createImageElement(elem):
+  if 'xCoord' in elem:
+    xCoord = elem['xCoord']
+  else:
+    xCoord = None
+  if 'yCoord' in elem:
+    yCoord = elem['yCoord']
+  else:
+    yCoord = None
+  if 'width' in elem:
+    width = elem['width']
+  else:
+    width = None
+  if 'height' in elem:
+    height = elem['height']
+  else:
+    height = None
+  if 'imgUrl' in elem:
+    img_url = elem['imgUrl']
+  else:
+    img_url = None
+  e = ImageElement(img_url, xCoord, yCoord, width, height)
+  db.session.add(e)
+  return e
+
 
 def generateError(msg):
     error = {"error": msg}

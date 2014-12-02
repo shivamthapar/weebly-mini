@@ -40,7 +40,8 @@ class TextElement(Base):
       'xCoord': self.x_coord,
       'yCoord': self.y_coord,
       'width': self.width,
-      'height': self.height
+      'height': self.height,
+      'content': self.content
     }
 
 class ImageElement(Base):
