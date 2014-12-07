@@ -7,7 +7,10 @@ A "REST" API to access and manipulate page data for the Mini Weebly Project
 Use cURL or any other HTTP requests library to call the methods as defined below. In addition, each URL must be supplied a param called `apiToken` with the value of the user's API Token, as defined in the web interface.
 
 #Data Format
-The Mini Weebly REST API allows you to access and manipulate `Pages` on the server. A `Page` has the following properties:
+The Mini Weebly REST API allows you to access and manipulate `Pages` on the server.
+
+####Page
+A `Page` has the following properties:
 - `gplusId`: (String) The Google+ ID of the user linked to the page
 - `id`: (Integer) The unique ID of the page
 - `title`: (String) Title of the page
