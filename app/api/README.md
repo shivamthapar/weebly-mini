@@ -1,7 +1,7 @@
 ====
-Mini Weebly REST API
+Weebly Mini REST API
 ====
-A "REST" API to access and manipulate page data for the Mini Weebly Project
+A "REST" API to access and manipulate page data for the Weebly Mini Project
 
 ##Contents
 
