@@ -3,6 +3,9 @@ Mini Weebly REST API
 ====
 A "REST" API to access and manipulate page data for the Mini Weebly Project
 
+#Usage
+Use cURL or any other HTTP requests library to call the methods as defined below. In addition, each URL must be supplied a param called `apiToken` with the value of the user's API Token, as defined in the web interface.
+
 #Methods
 
 GET /api/pages (Get all pages)
