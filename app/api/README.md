@@ -36,6 +36,7 @@ A `ImageElement` represents an image on the page. It has the following propertie
 - `yCoord`: (String) Absolute offset from the top boundary of the page. The string is in CSS format (e.g. `"100px"`).
 - `width`: (String) Width of the element as a CSS formatted string (eg. `"200px"`).
 - `height`: (String) Height of the element as a CSS formatted string (eg. `"200px"`).
+
 #Methods
 
 GET /api/pages (Get all pages)
