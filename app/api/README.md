@@ -9,7 +9,7 @@ Use cURL or any other HTTP requests library to call the methods as defined below
 #Data Format
 The Mini Weebly REST API allows you to access and manipulate `Pages` on the server.
 
-####Page
+###Page
 A `Page` has the following properties:
 - `gplusId`: (String) The Google+ ID of the user linked to the page
 - `id`: (Integer) The unique ID of the page
