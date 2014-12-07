@@ -14,7 +14,11 @@ Get a JSON representation of all of the user's pages.
 
 Sample cURL call:
 ```
-
+curl --get http://localhost:5000/api/pages?apiToken=APITOKEN
+```
+Response:
+```
+{"pages": [{"imageElements": [{"pageId": 1, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 1, "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "id": 1, "textElements": [{"pageId": 1, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 1}, {"pageId": 1, "yCoord": "390px", "height": "150px", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum volutpat diam et mauris blandit ultricies sed sit amet arcu. Aenean quis lectus nibh. Morbi vulputate, neque vel condimentum volutpat, tellus eros luctus nibh, et tristique massa neque vel nibh. Quisque vitae metus tellus. Etiam blandit dolor non egestas aliquet. Mauris consequat neque ut quam semper placerat. Curabitur vulputate finibus nunc, in ultricies augue tincidunt eu.", "width": "500px", "xCoord": "26px", "id": 2}], "title": "Page Title"}, {"imageElements": [{"pageId": 5, "yCoord": "70px", "height": "279px", "width": "501px", "xCoord": "26px", "id": 4, "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "id": 5, "textElements": [{"pageId": 5, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 7}, {"pageId": 5, "yCoord": "390px", "height": "150px", "content": "CONTENT CHANGED YAAAY", "width": "500px", "xCoord": "26px", "id": 8}], "title": "Page Title"}]}
 ```
 GET /api/page/:id (Get a specific page)
 --------------------------------------
