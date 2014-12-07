@@ -4,6 +4,7 @@ Mini Weebly REST API
 A "REST" API to access and manipulate page data for the Mini Weebly Project
 
 ##Contents
+
 -[Usage](#usage)
 -[Objects](#objects)
   -[Page](#page)
@@ -66,7 +67,7 @@ Get a JSON representation of the specific page with the given `id`.
 
 Sample cURL call:
 ```
-curl --get http://localhost:5000/api/pages/1?apiToken=APITOKEN
+curl --get http://localhost:5000/api/page/1?apiToken=APITOKEN
 ```
 Response:
 ```
@@ -90,7 +91,7 @@ Update a specific page. Replaces page with the given `id` with the page passed i
 
 Sample cURL call:
 ```
-curl -X PUT -H "application/json" -d  '{"imageElements": [{"yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "textElements": [{"yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px"}], "title": "Updated Page Title"}' http://localhost:5000/api/pages/6?apiToken=22af509b2ae9aa32fcf41e60cc935d2a0e881d597d971860823abbf3dbf52b7b
+curl -X PUT -H "application/json" -d  '{"imageElements": [{"yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "textElements": [{"yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px"}], "title": "Updated Page Title"}' http://localhost:5000/api/page/6?apiToken=22af509b2ae9aa32fcf41e60cc935d2a0e881d597d971860823abbf3dbf52b7b
 ```
 DELETE /api/page/:id
 --------------------------------------
@@ -98,7 +99,7 @@ Deletes page with the given `id`.
 
 Sample cURL call:
 ```
-curl -X DELETE http://localhost:5000/api/pages/6?apiToken=22af509b2ae9aa32fcf41e60cc935d2a0e881d597d971860823abbf3dbf52b7b
+curl -X DELETE http://localhost:5000/api/page/6?apiToken=22af509b2ae9aa32fcf41e60cc935d2a0e881d597d971860823abbf3dbf52b7b
 ```
 
 #Errors

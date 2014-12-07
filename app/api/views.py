@@ -53,7 +53,7 @@ def getPages():
   response.headers['Content-Type'] = 'application/json'
   return response
 
-@mod_api.route('/pages/<int:id>', methods=['GET'])
+@mod_api.route('/page/<int:id>', methods=['GET'])
 def getPage(id):
   apiToken = request.args.get('apiToken')
   user = User.query.filter_by(apiToken=apiToken).first()
@@ -107,7 +107,7 @@ def createPage():
   response.headers['Content-Type'] = 'application/json'
   return response
 
-@mod_api.route('/pages/<int:id>', methods=['PUT'])
+@mod_api.route('/page/<int:id>', methods=['PUT'])
 def updatePage(id):
   apiToken = request.args.get('apiToken')
   user = User.query.filter_by(apiToken=apiToken).first()
@@ -151,7 +151,7 @@ def updatePage(id):
   response.headers['Content-Type'] = 'application/json'
   return response
 
-@mod_api.route('/pages/<int:id>',methods=['DELETE'])
+@mod_api.route('/page/<int:id>',methods=['DELETE'])
 def deletePage(id):
   apiToken = request.args.get('apiToken')
   user = User.query.filter_by(apiToken=apiToken).first()
