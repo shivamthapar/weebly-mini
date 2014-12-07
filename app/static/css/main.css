@@ -63,6 +63,50 @@ body{
   text-align: center;
   padding: 10px 0px;
 }
+table {
+    width: 100%;
+}
+
+.sidebar-element-pic p {
+  text-decoration: none;
+  color: rgb(80,102,123); 
+  width: 100%; 
+  background: none; 
+  display: block;
+  font-size: 12px; 
+  position: absolute;
+  top: 68px;
+}
+
+td {
+    border-right: 1px solid rgb(20,32,42);
+    border-bottom: 1px solid rgb(20,32,42);
+    text-align: center;
+    padding-bottom: 30px;
+    padding-top: 20px;
+}
+.sidebar-element-row{
+  width: 100%;
+}
+.sidebar-element-pic{
+  background: url(../Element-Icons.png);
+  width: 55px;
+  height: 64px;
+  margin: 0 auto;
+  position: relative;
+}
+.sidebar-element-pic#title{
+    background-position-x: -8px;
+}
+.sidebar-element-pic#text{
+    background-position-x: -61px;
+}
+.sidebar-element-pic#image{
+    background-position-x: 116px;
+}
+.sidebar-element-pic#nav{
+    background-position-x: 63px;
+}
 #mainpanel{
   width: 75%;
   display: table-cell;
