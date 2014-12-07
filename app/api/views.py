@@ -151,8 +151,25 @@ def updatePage(id):
   response = make_response("", 200)
   response.headers['Content-Type'] = 'application/json'
   return response
-  
 
+@mod_api.route('/pages/<int:id>',methods=['DELETE'])
+def deletePage(id):
+  apiToken = request.args.get('apiToken')
+  user = User.query.filter_by(apiToken=apiToken).first()
+  if user is None:
+    return generateError(API.INVALID_API_TOKEN_MSG)
+  page = Page.query.filter_by(id=id).first()
+  if page is None:
+    return generateError(API.INVALID_PAGE_ID_MSG)
+  if page.gplusId != user.gplusId:
+    return generateError(API.WRONG_USER_MSG)
+  page.text_elements.delete()
+  page.image_elements.delete()
+  db.session.delete(page)
+  db.session.commit()
+  response = make_response("", 204)
+  response.headers['Content-Type'] = 'application/json'
+  return response
 
 def createTextElement(elem):
   if 'xCoord' in elem:
