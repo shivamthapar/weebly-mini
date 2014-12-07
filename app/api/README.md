@@ -17,6 +17,13 @@ A `Page` has the following properties:
 - `textElements`: (TextElement[]) Array of `TextElement` objects contained in this page
 - `imageElements`: (ImageElement[]) Array of `TextElement` objects contained in this page
 
+###TextElement
+A `TextElement` represents a block of text. It has the following properties:
+- `pageId`: (Integer) The unique ID of the Page the TextElement is part of
+- `id`: (Integer) The unique ID of the TextElement
+- `content`: (String) The text content of the element
+- `xCoord`: (String) Absolute offset from the left boundary of the page. The string is in CSS format (e.g. `"26px"`).
+- `imageElements`: (ImageElement[]) Array of `TextElement` objects contained in this page
 #Methods
 
 GET /api/pages (Get all pages)
