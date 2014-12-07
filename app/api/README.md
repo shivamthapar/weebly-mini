@@ -85,8 +85,16 @@ curl -X PUT -H "application/json" -d  '{"imageElements": [{"yCoord": "50px", "he
 ```
 DELETE /api/page/:id (Delete a specific page)
 --------------------------------------
+Deletes page with the given `id`.
+
+Sample cURL call:
+```
+curl -X DELETE http://localhost:5000/api/pages/6?apiToken=22af509b2ae9aa32fcf41e60cc935d2a0e881d597d971860823abbf3dbf52b7b
+```
 
 #Errors
-If an API call fails, a JSON object is returned along with an HTTP 500 status code. 
+If an API call fails, an Error object is returned with properties, `message` and `code`.
 Sample error:
-
+```
+{"message": "Invalid API Token.", "code": 401}
+```

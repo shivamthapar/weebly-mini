@@ -43,7 +43,7 @@ def getPages():
   apiToken = request.args.get('apiToken')
   user = User.query.filter_by(apiToken=apiToken).first()
   if user is None:
-    return generateError(API.INVALID_API_TOKEN_MSG)
+    return generateError(API.INVALID_API_TOKEN_MSG, 401)
   query = Page.query.filter_by(gplusId=user.gplusId)
   pages = []
   for page in query:
@@ -58,10 +58,10 @@ def getPage(id):
   apiToken = request.args.get('apiToken')
   user = User.query.filter_by(apiToken=apiToken).first()
   if user is None:
-    return generateError(API.INVALID_API_TOKEN_MSG)
+    return generateError(API.INVALID_API_TOKEN_MSG, 401)
   page = Page.query.filter_by(id=id).first()
   if page is None:
-    return generateError(API.INVALID_PAGE_ID_MSG)
+    return generateError(API.INVALID_PAGE_ID_MSG, 404)
   if page.gplusId != user.gplusId:
     return generateError(API.WRONG_USER_MSG)
   response = make_response(json.dumps(page.serialize()), 200)
@@ -73,7 +73,7 @@ def createPage():
   apiToken = request.args.get('apiToken')
   user = User.query.filter_by(apiToken=apiToken).first()
   if user is None:
-    return generateError(API.INVALID_API_TOKEN_MSG)
+    return generateError(API.INVALID_API_TOKEN_MSG, 401)
   data = request.get_json(force=True)
   if 'title' in data:
     title = data['title']
@@ -103,27 +103,24 @@ def createPage():
     db.session.add(elem)
     
   db.session.commit()
-  response = make_response(json.dumps(page.serialize()), 200)
+  response = make_response(json.dumps(page.serialize()), 201)
   response.headers['Content-Type'] = 'application/json'
   return response
 
 @mod_api.route('/pages/<int:id>', methods=['PUT'])
 def updatePage(id):
   apiToken = request.args.get('apiToken')
-  print apiToken
   user = User.query.filter_by(apiToken=apiToken).first()
   if user is None:
-    return generateError(API.INVALID_API_TOKEN_MSG)
+    return generateError(API.INVALID_API_TOKEN_MSG, 401)
   page = Page.query.filter_by(id=id).first()
   if page is None:
-    return generateError(API.INVALID_PAGE_ID_MSG)
+    return generateError(API.INVALID_PAGE_ID_MSG, 404)
   if page.gplusId != user.gplusId:
-    return generateError(API.WRONG_USER_MSG)
+    return generateError(API.WRONG_USER_MSG, 401)
   data = request.get_json(force=True)
-  print "GETTING PRETTY FAR"
   if 'title' in data:
     page.title = data['title']
-  print page.title
   text_element_objs = []
   page.text_elements.delete()
   if 'textElements' in data:
@@ -150,7 +147,7 @@ def updatePage(id):
     
   db.session.commit()
   p = Page.query.filter_by(title=page.title).first()
-  response = make_response("", 200)
+  response = make_response("", 201)
   response.headers['Content-Type'] = 'application/json'
   return response
 
@@ -159,12 +156,12 @@ def deletePage(id):
   apiToken = request.args.get('apiToken')
   user = User.query.filter_by(apiToken=apiToken).first()
   if user is None:
-    return generateError(API.INVALID_API_TOKEN_MSG)
+    return generateError(API.INVALID_API_TOKEN_MSG, 401)
   page = Page.query.filter_by(id=id).first()
   if page is None:
-    return generateError(API.INVALID_PAGE_ID_MSG)
+    return generateError(API.INVALID_PAGE_ID_MSG, 404)
   if page.gplusId != user.gplusId:
-    return generateError(API.WRONG_USER_MSG)
+    return generateError(API.WRONG_USER_MSG, 401)
   page.text_elements.delete()
   page.image_elements.delete()
   db.session.delete(page)
@@ -224,9 +221,10 @@ def createImageElement(elem):
   return e
 
 
-def generateError(msg):
-    error = {"error": msg}
-    response = make_response(json.dumps(error), 500)
+def generateError(msg,code=500):
+    code = int(code)
+    error = {"code": code, "message": msg}
+    response = make_response(json.dumps(error), code)
     response.headers['Content-Type'] = 'application/json'
     return response
 
