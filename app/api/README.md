@@ -4,13 +4,19 @@ Mini Weebly REST API
 A "REST" API to access and manipulate page data for the Mini Weebly Project
 
 ##Contents
--[Usage](#usage)
--[Objects](#objects)
-  -[Page](#page)
-  -[TextElement](#textelement)
-  -[ImageElement](#imagelement)
--[Methods](#methods)
-  -[GET /api/pages](#get-apipages)
+
+- [Usage](#usage)
+- [Objects](#objects)
+  - [Page](#page)
+  - [TextElement](#textelement)
+  - [ImageElement](#imagelement)
+- [Methods](#methods)
+  - [GET /api/pages](#get-apipages)
+  - [GET /api/page/:id](#get-apipagesid)
+  - [POST /api/pages](#post-apipages)
+  - [PUT /api/page/:id](#put-apipages)
+  - [DELETE /api/page/:id](#delete-apipageid)
+- [Errors](#errors)
 
 ##Usage
 Use cURL or any other HTTP requests library to call the methods as defined below. In addition, each URL must be supplied a param called `apiToken` with the value of the user's API Token, as defined in the web interface.
@@ -101,7 +107,7 @@ Sample cURL call:
 curl -X DELETE http://localhost:5000/api/pages/6?apiToken=22af509b2ae9aa32fcf41e60cc935d2a0e881d597d971860823abbf3dbf52b7b
 ```
 
-#Errors
+##Errors
 If an API call fails, an Error object is returned with properties, `message` and `code`.
 
 Sample error:
