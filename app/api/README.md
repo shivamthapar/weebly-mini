@@ -94,6 +94,7 @@ curl -X DELETE http://localhost:5000/api/pages/6?apiToken=22af509b2ae9aa32fcf41e
 
 #Errors
 If an API call fails, an Error object is returned with properties, `message` and `code`.
+
 Sample error:
 ```
 {"message": "Invalid API Token.", "code": 401}
