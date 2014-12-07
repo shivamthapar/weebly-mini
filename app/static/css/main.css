@@ -227,6 +227,10 @@ li#sidebar-new-page{
   background: rgb(123, 208, 0);
   color: white;
 }
+.image-elem{
+  position:absolute;
+  margin: 0px;
+}
 #page-content{
   width: 100%;
   padding: 10px;

@@ -108,6 +108,52 @@ def createPage():
   response.headers['Content-Type'] = 'application/json'
   return response
 
+@mod_api.route('/pages/<int:id>', methods=['PUT'])
+def updatePage(id):
+  apiToken = request.args.get('apiToken')
+  user = User.query.filter_by(apiToken=apiToken).first()
+  if user is None:
+    return generateError(API.INVALID_API_TOKEN_MSG)
+  page = Page.query.filter_by(id=id).first()
+  if page is None:
+    return generateError(API.INVALID_PAGE_ID_MSG)
+  if page.gplusId != user.gplusId:
+    return generateError(API.WRONG_USER_MSG)
+  data = request.get_json(force=True)
+  if 'title' in data:
+    page.title = data['title']
+  text_element_objs = []
+  if 'textElements' in data:
+    text_elements = data['textElements']
+    page.text_elements.delete()
+    for elem in text_elements:
+      e = createTextElement(elem)
+      text_element_objs.append(e)
+      page.text_elements.append(e)
+
+  image_element_objs = []
+  if 'imageElements' in data:
+    image_elements = data['imageElements']
+    page.image_elements.delete()
+    for elem in image_elements:
+      e = createImageElement(elem)
+      image_element_objs.append(e)
+      page.image_elements.append(e)
+  
+  db.session.add(page)
+  for elem in text_element_objs:
+    db.session.add(elem)
+  for elem in image_element_objs:
+    db.session.add(elem)
+    
+  db.session.commit()
+  p = Page.query.filter_by(title=page.title).first()
+  response = make_response("", 200)
+  response.headers['Content-Type'] = 'application/json'
+  return response
+  
+
+
 def createTextElement(elem):
   if 'xCoord' in elem:
     xCoord = elem['xCoord']
