@@ -12,6 +12,10 @@ GET /api/pages (Get all pages)
 --------------------------------------
 Get a JSON representation of all of the user's pages.
 
+Sample cURL call:
+```
+
+```
 GET /api/page/:id (Get a specific page)
 --------------------------------------
 POST /api/pages (Create a new page)
