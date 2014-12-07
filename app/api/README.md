@@ -65,8 +65,24 @@ Response:
 ```
 POST /api/pages (Create a new page)
 --------------------------------------
+Create a new page with the given attributes. Returns a JSON representation of the page added.
+
+Sample cURL call:
+```
+curl -X POST -H "application/json" -d  '{"imageElements": [{"pageId": 1, "yCoord": "50px", , "gplusId": "115899113282816200821", "textElements": [{"pageId": 1, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 1}, {"pageId": 1, "yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px", "id": 2}], "title": "Page Title"}' http://localhost:5000/api/pages?apiToken=APITOKEN
+```
+Response:
+```
+{"imageElements": [{"pageId": 6, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 5, "imgUrl": "dummy_image.png"}, {"pageId": 6, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 6, "imgUrl": "dummy_image.png"}, {"pageId": 6, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 8, "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "id": 6, "textElements": [{"pageId": 6, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 9}, {"pageId": 6, "yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px", "id": 10}, {"pageId": 6, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 11}, {"pageId": 6, "yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px", "id": 12}, {"pageId": 6, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 15}, {"pageId": 6, "yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px", "id": 16}], "title": "Page Title"}
+```
 PUT /api/page/:id (Update a specific page)
 --------------------------------------
+Replaces page with the given `id` with the page passed in.
+
+Sample cURL call:
+```
+curl -X PUT -H "application/json" -d  '{"imageElements": [{"yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "textElements": [{"yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px"}], "title": "Updated Page Title"}' http://localhost:5000/api/pages/6?apiToken=22af509b2ae9aa32fcf41e60cc935d2a0e881d597d971860823abbf3dbf52b7b
+```
 DELETE /api/page/:id (Delete a specific page)
 --------------------------------------
 

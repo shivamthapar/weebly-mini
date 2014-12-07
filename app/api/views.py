@@ -103,14 +103,14 @@ def createPage():
     db.session.add(elem)
     
   db.session.commit()
-  p = Page.query.filter_by(title=page.title).first()
-  response = make_response(json.dumps(p.serialize()), 200)
+  response = make_response(json.dumps(page.serialize()), 200)
   response.headers['Content-Type'] = 'application/json'
   return response
 
 @mod_api.route('/pages/<int:id>', methods=['PUT'])
 def updatePage(id):
   apiToken = request.args.get('apiToken')
+  print apiToken
   user = User.query.filter_by(apiToken=apiToken).first()
   if user is None:
     return generateError(API.INVALID_API_TOKEN_MSG)
@@ -120,21 +120,23 @@ def updatePage(id):
   if page.gplusId != user.gplusId:
     return generateError(API.WRONG_USER_MSG)
   data = request.get_json(force=True)
+  print "GETTING PRETTY FAR"
   if 'title' in data:
     page.title = data['title']
+  print page.title
   text_element_objs = []
+  page.text_elements.delete()
   if 'textElements' in data:
     text_elements = data['textElements']
-    page.text_elements.delete()
     for elem in text_elements:
       e = createTextElement(elem)
       text_element_objs.append(e)
       page.text_elements.append(e)
 
   image_element_objs = []
+  page.image_elements.delete()
   if 'imageElements' in data:
     image_elements = data['imageElements']
-    page.image_elements.delete()
     for elem in image_elements:
       e = createImageElement(elem)
       image_element_objs.append(e)
