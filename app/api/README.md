@@ -10,6 +10,8 @@ Use cURL or any other HTTP requests library to call the methods as defined below
 
 GET /api/pages (Get all pages)
 --------------------------------------
+Get a JSON representation of all of the user's pages.
+
 GET /api/page/:id (Get a specific page)
 --------------------------------------
 POST /api/pages (Create a new page)
