@@ -53,9 +53,24 @@ Response:
 ```
 GET /api/page/:id (Get a specific page)
 --------------------------------------
+Get a JSON representation of a specific page with the given `id`.
+
+Sample cURL call:
+```
+curl --get http://localhost:5000/api/pages/1?apiToken=APITOKEN
+```
+Response:
+```
+{"imageElements": [{"pageId": 1, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 1, "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "id": 1, "textElements": [{"pageId": 1, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 1}, {"pageId": 1, "yCoord": "390px", "height": "150px", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum volutpat diam et mauris blandit ultricies sed sit amet arcu. Aenean quis lectus nibh. Morbi vulputate, neque vel condimentum volutpat, tellus eros luctus nibh, et tristique massa neque vel nibh. Quisque vitae metus tellus. Etiam blandit dolor non egestas aliquet. Mauris consequat neque ut quam semper placerat. Curabitur vulputate finibus nunc, in ultricies augue tincidunt eu.", "width": "500px", "xCoord": "26px", "id": 2}], "title": "Page Title"}
+```
 POST /api/pages (Create a new page)
 --------------------------------------
 PUT /api/page/:id (Update a specific page)
 --------------------------------------
 DELETE /api/page/:id (Delete a specific page)
 --------------------------------------
+
+#Errors
+If an API call fails, a JSON object is returned along with an HTTP 500 status code. 
+Sample error:
+
