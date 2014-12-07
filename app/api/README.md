@@ -3,10 +3,19 @@ Mini Weebly REST API
 ====
 A "REST" API to access and manipulate page data for the Mini Weebly Project
 
-#Usage
+##Contents
+-[Usage](#usage)
+-[Objects](#objects)
+  -[Page](#page)
+  -[TextElement](#textelement)
+  -[ImageElement](#imagelement)
+-[Methods](#methods)
+  -[GET /api/pages](#get-apipages)
+
+##Usage
 Use cURL or any other HTTP requests library to call the methods as defined below. In addition, each URL must be supplied a param called `apiToken` with the value of the user's API Token, as defined in the web interface.
 
-#Objects
+##Objects
 The API deals mainly with 3 types of objects: `Pages`,`TextElements`, and `ImageElements`.
 
 ###Page
@@ -37,9 +46,9 @@ A `ImageElement` represents an image on the page. It has the following propertie
 - `width`: (String) Width of the element as a CSS formatted string (eg. `"200px"`).
 - `height`: (String) Height of the element as a CSS formatted string (eg. `"200px"`).
 
-#Methods
+##Methods
 
-GET /api/pages (Get all pages)
+GET /api/pages
 --------------------------------------
 Get a JSON representation of all of the user's pages.
 
@@ -51,9 +60,9 @@ Response:
 ```
 {"pages": [{"imageElements": [{"pageId": 1, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 1, "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "id": 1, "textElements": [{"pageId": 1, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 1}, {"pageId": 1, "yCoord": "390px", "height": "150px", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum volutpat diam et mauris blandit ultricies sed sit amet arcu. Aenean quis lectus nibh. Morbi vulputate, neque vel condimentum volutpat, tellus eros luctus nibh, et tristique massa neque vel nibh. Quisque vitae metus tellus. Etiam blandit dolor non egestas aliquet. Mauris consequat neque ut quam semper placerat. Curabitur vulputate finibus nunc, in ultricies augue tincidunt eu.", "width": "500px", "xCoord": "26px", "id": 2}], "title": "Page Title"}, {"imageElements": [{"pageId": 5, "yCoord": "70px", "height": "279px", "width": "501px", "xCoord": "26px", "id": 4, "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "id": 5, "textElements": [{"pageId": 5, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 7}, {"pageId": 5, "yCoord": "390px", "height": "150px", "content": "CONTENT CHANGED YAAAY", "width": "500px", "xCoord": "26px", "id": 8}], "title": "Page Title"}]}
 ```
-GET /api/page/:id (Get a specific page)
+GET /api/page/:id
 --------------------------------------
-Get a JSON representation of a specific page with the given `id`.
+Get a JSON representation of the specific page with the given `id`.
 
 Sample cURL call:
 ```
@@ -63,7 +72,7 @@ Response:
 ```
 {"imageElements": [{"pageId": 1, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 1, "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "id": 1, "textElements": [{"pageId": 1, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 1}, {"pageId": 1, "yCoord": "390px", "height": "150px", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum volutpat diam et mauris blandit ultricies sed sit amet arcu. Aenean quis lectus nibh. Morbi vulputate, neque vel condimentum volutpat, tellus eros luctus nibh, et tristique massa neque vel nibh. Quisque vitae metus tellus. Etiam blandit dolor non egestas aliquet. Mauris consequat neque ut quam semper placerat. Curabitur vulputate finibus nunc, in ultricies augue tincidunt eu.", "width": "500px", "xCoord": "26px", "id": 2}], "title": "Page Title"}
 ```
-POST /api/pages (Create a new page)
+POST /api/pages
 --------------------------------------
 Create a new page with the given attributes. Returns a JSON representation of the page added.
 
@@ -75,15 +84,15 @@ Response:
 ```
 {"imageElements": [{"pageId": 6, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 5, "imgUrl": "dummy_image.png"}, {"pageId": 6, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 6, "imgUrl": "dummy_image.png"}, {"pageId": 6, "yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "id": 8, "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "id": 6, "textElements": [{"pageId": 6, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 9}, {"pageId": 6, "yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px", "id": 10}, {"pageId": 6, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 11}, {"pageId": 6, "yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px", "id": 12}, {"pageId": 6, "yCoord": "364px", "height": "20px", "content": "this is sample text content #1", "width": "200px", "xCoord": "26px", "id": 15}, {"pageId": 6, "yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px", "id": 16}], "title": "Page Title"}
 ```
-PUT /api/page/:id (Update a specific page)
+PUT /api/page/:id 
 --------------------------------------
-Replaces page with the given `id` with the page passed in.
+Update a specific page. Replaces page with the given `id` with the page passed in.
 
 Sample cURL call:
 ```
 curl -X PUT -H "application/json" -d  '{"imageElements": [{"yCoord": "50px", "height": "279px", "width": "501px", "xCoord": "10px", "imgUrl": "dummy_image.png"}], "gplusId": "115899113282816200821", "textElements": [{"yCoord": "390px", "height": "150px", "content": "Text Content.", "width": "500px", "xCoord": "26px"}], "title": "Updated Page Title"}' http://localhost:5000/api/pages/6?apiToken=22af509b2ae9aa32fcf41e60cc935d2a0e881d597d971860823abbf3dbf52b7b
 ```
-DELETE /api/page/:id (Delete a specific page)
+DELETE /api/page/:id
 --------------------------------------
 Deletes page with the given `id`.
 
