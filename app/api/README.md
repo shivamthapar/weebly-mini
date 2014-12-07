@@ -12,9 +12,9 @@ A "REST" API to access and manipulate page data for the Mini Weebly Project
   - [ImageElement](#imagelement)
 - [Methods](#methods)
   - [GET /api/pages](#get-apipages)
-  - [GET /api/page/:id](#get-apipagesid)
+  - [GET /api/page/:id](#get-apipageid)
   - [POST /api/pages](#post-apipages)
-  - [PUT /api/page/:id](#put-apipages)
+  - [PUT /api/page/:id](#put-apipageid)
   - [DELETE /api/page/:id](#delete-apipageid)
 - [Errors](#errors)
 
