@@ -31,7 +31,7 @@ A `TextElement` represents a block of text. It has the following properties:
 A `ImageElement` represents an image on the page. It has the following properties:
 - `pageId`: (Integer) The unique ID of the Page the TextElement is part of
 - `id`: (Integer) The unique ID of the TextElement
-- `imgUrl`: (String) The filename of the image. NOTE: As of now, the image is not uploaded, so the image needs to be in the `../static/` directory.
+- `imgUrl`: (String) The filename of the image. NOTE: As of now, the image is not uploaded, so the image needs to be in the [`../static/`](https://github.com/shivamthapar/weebly-mini/tree/master/app/static) directory.
 - `xCoord`: (String) Absolute offset from the left boundary of the page. The string is in CSS format (e.g. `"26px"`).
 - `yCoord`: (String) Absolute offset from the top boundary of the page. The string is in CSS format (e.g. `"100px"`).
 - `width`: (String) Width of the element as a CSS formatted string (eg. `"200px"`).
