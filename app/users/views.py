@@ -22,6 +22,7 @@ from flask_kvsession import KVSessionExtension
 
 from app import db
 from app.users.models import User
+from app.pages.models import Page,TextElement, ImageElement
 
 app = Flask(__name__)
 
@@ -103,9 +104,25 @@ def createUser():
     user.apiToken = user.getAPIToken()
     db.session.merge(user)
     db.session.commit()
+    createDummyPage(user.gplusId)
     #return redirect(url_for(profile))
   except Exception, e:
     print e
+
+def createDummyPage(gplusId):
+  page = Page(gplusId, "Sample Page", "Test Content")
+  a = TextElement("this is sample text content #1", "26px","364px","200px","20px")
+  b = TextElement("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum volutpat diam et mauris blandit ultricies sed sit amet arcu. Aenean quis lectus nibh. Morbi vulputate, neque vel condimentum volutpat, tellus eros luctus nibh, et tristique massa neque vel nibh. Quisque vitae metus tellus. Etiam blandit dolor non egestas aliquet. Mauris consequat neque ut quam semper placerat. Curabitur vulputate finibus nunc, in ultricies augue tincidunt eu.", "26px", "390px", "500px", "150px")
+  c = ImageElement("dummy_image.png", "10px", "50px", "501px", "279px")
+  page.text_elements.append(a)
+  page.text_elements.append(b)
+  page.image_elements.append(c)
+  db.session.add(page)
+  db.session.add(a)
+  db.session.add(b)
+  db.session.add(c)
+  db.session.commit()
+
 
 def getUserDetails():
   access_token = session.get('credentials')
