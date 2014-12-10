@@ -219,6 +219,8 @@ def delete(pageId):
   gplusId = session.get('gplus_id')
   if gplusId is None:
     raise Exception("User not logged in")
+  TextElement.query.filter_by(page_id=pageId).delete()
+  ImageElement.query.filter_by(page_id=pageId).delete()
   Page.query.filter_by(id=pageId).delete()
   db.session.commit()
   return redirect(url_for('pages.index'))
