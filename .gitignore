@@ -3,4 +3,3 @@ venv/
 *.swp
 *.pyc
 *.db
-client_secrets.json
